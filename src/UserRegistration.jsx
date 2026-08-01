@@ -30,12 +30,75 @@ const genders = [
   },
 ];
 
+const departments = [
+  {
+    value: "-",
+    name: "-",
+    positions: []
+  },
+  {
+    value: "general-staff",
+    name: "General Staff",
+    positions: [
+      {
+        value: "cleaner",
+        name: "Cleaner",
+      },
+      {
+        value: "receptionist",
+        name: "Receptionist",
+      },
+      {
+        value: "security-guard",
+        name: "Security Guard",
+      }
+    ]
+  },
+  {
+    value: "accounting",
+    name: "Accounting",
+    positions: [
+      {
+        value: "accountant",
+        name: "Accountant",
+      },
+      {
+        value: "senior-accountant",
+        name: "Senior Accountant",
+      },
+      {
+        value: "payroll-officer",
+        name: "Payroll Officer",
+      }
+    ]
+  },
+  {
+    value: "it",
+    name: "IT",
+    positions: [
+      {
+        value: "junior-developer",
+        name: "Junior Developer",
+      },
+      {
+        value: "senior-developer",
+        name: "Senior Developer",
+      },
+      {
+        value: "systems-analyst",
+        name: "Systems Analyst",
+      }
+    ]
+  }
+]
+
 function UserRegistration() {
   const [userName, setUserName] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [userGender, setUserGender] = useState('')
   const [userHobbies, setUserHobbies] = useState([])
+  const department = useRef(null);
 
   function handleReset() {
     setUserName('')
@@ -96,12 +159,18 @@ function UserRegistration() {
           </div>
         </div>
         <div className={"form-row"}>
-          <label htmlFor="role">Role</label>
-          <select id="role" name="role">
-            <option value="general-staff">General Staff</option>
-            <option value="developer">Developer</option>
-            <option value="system-analsyt">System Analyst</option>
+          <label htmlFor="department">Department</label>
+          <select id="department" name="department" ref={department} onChange={() => console.log(department.current.value)}>
+            {departments.map((department) => {
+              return (
+                  <option value={department.value} key={department.value}>{department.name}</option>
+              )
+            })
+            }
           </select>
+        </div>
+        <div className={"form-row"}>
+
         </div>
       </div>
       <hr />
