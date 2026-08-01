@@ -41,6 +41,10 @@ const departments = [
     name: "General Staff",
     positions: [
       {
+        value: "-",
+        name: "-",
+      },
+      {
         value: "cleaner",
         name: "Cleaner",
       },
@@ -59,6 +63,10 @@ const departments = [
     name: "Accounting",
     positions: [
       {
+        value: "-",
+        name: "-",
+      },
+      {
         value: "accountant",
         name: "Accountant",
       },
@@ -76,6 +84,10 @@ const departments = [
     value: "it",
     name: "IT",
     positions: [
+      {
+        value: "-",
+        name: "-",
+      },
       {
         value: "junior-developer",
         name: "Junior Developer",
@@ -99,6 +111,8 @@ function UserRegistration() {
   const [userGender, setUserGender] = useState('')
   const [userHobbies, setUserHobbies] = useState([])
   const [selectedDepartment, setSelectedDepartment] = useState('')
+  const [job, setJob] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   function handleReset() {
     setUserName('')
@@ -107,10 +121,12 @@ function UserRegistration() {
     setUserGender('')
     setUserHobbies([])
     setSelectedDepartment('')
+    setJob('')
+    setIsSubmitted(false)
   }
 
   function handleSubmit() {
-
+    setIsSubmitted(true)
   }
 
   return (
@@ -136,7 +152,7 @@ function UserRegistration() {
             {genders.map((gender) => {
               return (
                 <div key={gender.value} className={"choice"}>
-                  <input type="radio" name="gender" id={gender.value} checked={userGender === gender.value} onChange={() => setUserGender(gender.value)}/>
+                  <input type="radio" name="gender" id={gender.name} checked={userGender === gender.name} onChange={() => setUserGender(gender.name)}/>
                   <label htmlFor={gender.value}>{gender.name}</label>
                 </div>
               )
@@ -149,9 +165,9 @@ function UserRegistration() {
             {hobbies.map((hobby) => {
               return (
                 <div key={hobby.value} className={"choice"}>
-                  <input type="checkbox" name="hobby" id={hobby.value} checked={userHobbies.includes(hobby.value)} onChange={(event) => {
-                      if (event.target.checked) { setUserHobbies([...userHobbies, hobby.value]) }
-                      else { setUserHobbies(userHobbies.filter(chosenHobby => chosenHobby !== hobby.value)) }
+                  <input type="checkbox" name="hobby" id={hobby.name} checked={userHobbies.includes(hobby.name)} onChange={(event) => {
+                      if (event.target.checked) { setUserHobbies([...userHobbies, hobby.name]) }
+                      else { setUserHobbies(userHobbies.filter(chosenHobby => chosenHobby !== hobby.name)) }
                     }}/>
                   <label htmlFor={hobby.value}>{hobby.name}</label>
                 </div>
@@ -172,12 +188,12 @@ function UserRegistration() {
         </div>
         <div className={"form-row"}>
           <label htmlFor="position">Job Position</label>
-          <select id="position" name="position">
+          <select id="position" name="position" value={job} onChange={(event) => setJob(event.target.value)}>
             {departments
                 .find((department) => {return department.value === selectedDepartment})?.positions
                 .map((position) => {
               return (
-                  <option value={position.value} key={position.value}>{position.name}</option>
+                  <option value={position.name} key={position.value}>{position.name}</option>
               )
             })
             }
@@ -189,6 +205,32 @@ function UserRegistration() {
         <button className={"reset-button"} onClick={() => handleReset()}>Reset</button>
         <button className={"submit-button"} onClick={() => handleSubmit()}>Submit</button>
       </div>
+      {isSubmitted && <div>
+        <div className={"form-row"}>
+          <p className="data-label">Username</p>
+          <p>{userName}</p>
+        </div>
+        <div className={"form-row"}>
+          <p className="data-label">Firstname</p>
+          <p>{firstName}</p>
+        </div>
+        <div className={"form-row"}>
+          <p className="data-label">Lastname</p>
+          <p>{lastName}</p>
+        </div>
+        <div className={"form-row"}>
+          <p className="data-label">Hobbies</p>
+          <p>{userHobbies.join(", ")}</p>
+        </div>
+        <div className={"form-row"}>
+          <p className="data-label">Gender</p>
+          <p>{userGender}</p>
+        </div>
+        <div className={"form-row"}>
+          <p className="data-label">Job</p>
+          <p>{job}</p>
+        </div>
+      </div>}
     </div>
   );
 }

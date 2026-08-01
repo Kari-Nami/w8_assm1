@@ -8,14 +8,18 @@ input, select {
   padding: 0.1rem 0.5rem;
 }
 
+p {
+  margin: 0;
+}
+
 .form-row {
   display: flex;
   align-items: flex-start;
   margin: 0.5rem 0;
 }
 
-.form-row label {
-  width: 10%;
+.form-row label, .data-label {
+  width: 15%;
 }
 
 .form {
