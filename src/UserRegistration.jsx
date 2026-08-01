@@ -98,7 +98,7 @@ function UserRegistration() {
   const [lastName, setLastName] = useState('')
   const [userGender, setUserGender] = useState('')
   const [userHobbies, setUserHobbies] = useState([])
-  const department = useRef(null);
+  const [selectedDepartment, setSelectedDepartment] = useState('')
 
   function handleReset() {
     setUserName('')
@@ -106,6 +106,7 @@ function UserRegistration() {
     setLastName('')
     setUserGender('')
     setUserHobbies([])
+    setSelectedDepartment('')
   }
 
   function handleSubmit() {
@@ -160,7 +161,7 @@ function UserRegistration() {
         </div>
         <div className={"form-row"}>
           <label htmlFor="department">Department</label>
-          <select id="department" name="department" ref={department} onChange={() => console.log(department.current.value)}>
+          <select id="department" name="department" value={selectedDepartment} onChange={(event) => setSelectedDepartment(event.target.value)}>
             {departments.map((department) => {
               return (
                   <option value={department.value} key={department.value}>{department.name}</option>
@@ -170,7 +171,17 @@ function UserRegistration() {
           </select>
         </div>
         <div className={"form-row"}>
-
+          <label htmlFor="position">Job Position</label>
+          <select id="position" name="position">
+            {departments
+                .find((department) => {return department.value === selectedDepartment})?.positions
+                .map((position) => {
+              return (
+                  <option value={position.value} key={position.value}>{position.name}</option>
+              )
+            })
+            }
+          </select>
         </div>
       </div>
       <hr />
